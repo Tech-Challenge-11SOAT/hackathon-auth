@@ -10,10 +10,10 @@ import br.com.fiap.hackathon_auth.adapters.outbound.entities.JpaUserEntity;
 import br.com.fiap.hackathon_auth.domain.user.User;
 import br.com.fiap.hackathon_auth.domain.user.UserRepository;
 import br.com.fiap.hackathon_auth.utils.mappers.UserMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
 
 	private final JpaUserRepository jpaUserRepository;
@@ -22,15 +22,14 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public User save(User user) {
 		JpaUserEntity jpaUserEntity = userMapper.domainToJpa(user);
-
-		this.jpaUserRepository.save(jpaUserEntity);
+		jpaUserEntity = this.jpaUserRepository.saveAndFlush(jpaUserEntity);
 		return userMapper.jpaToDomain(jpaUserEntity);
 	}
 
 	@Override
-	public User findById(UUID id) {
-		Optional<JpaUserEntity> optionalEntity = this.jpaUserRepository.findById(id);
-		return optionalEntity.map(userMapper::jpaToDomain).orElse(null);
+	public Optional<User> findById(UUID id) {
+		return this.jpaUserRepository.findById(id)
+				.map(userMapper::jpaToDomain);
 	}
 
 	@Override
