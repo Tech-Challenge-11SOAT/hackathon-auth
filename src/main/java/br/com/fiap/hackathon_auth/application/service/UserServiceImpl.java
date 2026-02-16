@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserUseCases {
 		LocalDateTime now = LocalDateTime.now();
 
 		User user = new User(
-				UUID.randomUUID(),
+				null,
 				registerRequestDTO.getName(),
 				registerRequestDTO.getEmail(),
 				passwordHash,
