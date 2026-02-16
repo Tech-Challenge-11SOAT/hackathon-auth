@@ -16,6 +16,15 @@ spring:
   web:
     resources:
       add-mappings: true
+  # Flyway Configuration
+  flyway:
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    validate-migration-naming: true
+    out-of-order: false
+    ignore-migration-patterns: "*:missing,*:future"
+    locations: classpath:db/migration
+    clean-disabled: true
 
 jwt:
   secret: postechHackathon2026SecretKey12345
