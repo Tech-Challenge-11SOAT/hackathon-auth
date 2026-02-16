@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.response.ErrorResponseDTO;
+import br.com.fiap.hackathon_auth.domain.exceptions.InvalidBasicAuthFormatException;
+import br.com.fiap.hackathon_auth.domain.exceptions.InvalidBasicAuthHeaderException;
 import br.com.fiap.hackathon_auth.domain.user.InvalidCredentialsException;
 import br.com.fiap.hackathon_auth.domain.user.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +67,38 @@ public class GlobalExceptionHandler {
 				.status(HttpStatus.BAD_REQUEST.value())
 				.error(HttpStatus.BAD_REQUEST.getReasonPhrase())
 				.message(errorMessage)
+				.path(request.getDescription(false).replace("uri=", ""))
+				.build();
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+
+	@ExceptionHandler(InvalidBasicAuthHeaderException.class)
+	public ResponseEntity<ErrorResponseDTO> handleInvalidBasicAuthHeaderException(
+			InvalidBasicAuthHeaderException ex, WebRequest request) {
+		log.error("Header Basic Auth inválido: {}", ex.getMessage());
+
+		ErrorResponseDTO error = ErrorResponseDTO.builder()
+				.timestamp(LocalDateTime.now())
+				.status(HttpStatus.BAD_REQUEST.value())
+				.error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+				.message(ex.getMessage())
+				.path(request.getDescription(false).replace("uri=", ""))
+				.build();
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+
+	@ExceptionHandler(InvalidBasicAuthFormatException.class)
+	public ResponseEntity<ErrorResponseDTO> handleInvalidBasicAuthFormatException(
+			InvalidBasicAuthFormatException ex, WebRequest request) {
+		log.error("Formato Basic Auth inválido: {}", ex.getMessage());
+
+		ErrorResponseDTO error = ErrorResponseDTO.builder()
+				.timestamp(LocalDateTime.now())
+				.status(HttpStatus.BAD_REQUEST.value())
+				.error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+				.message(ex.getMessage())
 				.path(request.getDescription(false).replace("uri=", ""))
 				.build();
 
