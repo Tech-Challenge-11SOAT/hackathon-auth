@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import br.com.fiap.hackathon_auth.utils.SecurityUtils;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -34,11 +35,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 		String token = this.parseToken(request);
 
-		// if (SecurityUtils.isPublicEndpoint(requestURI)) {
-		// logger.info("Endpoint não necessita de autorização, continuando...");
-		// filterChain.doFilter(request, response);
-		// return;
-		// }
+		if (SecurityUtils.isPublicEndpoint(requestURI)) {
+			logger.info("Endpoint não necessita de autorização, continuando...");
+			filterChain.doFilter(request, response);
+			return;
+		}
 
 		try {
 			if (token == null) {
