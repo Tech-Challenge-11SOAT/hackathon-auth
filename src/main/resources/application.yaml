@@ -17,3 +17,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+jwt:
+  secret: postechHackathon2026
+  refresh-token-expiration: 900000
+  access-token-expiration: 604800000
