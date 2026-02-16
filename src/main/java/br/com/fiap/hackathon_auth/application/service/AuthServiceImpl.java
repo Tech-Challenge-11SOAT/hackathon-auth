@@ -3,6 +3,7 @@ package br.com.fiap.hackathon_auth.application.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.fiap.hackathon_auth.adapters.configuration.JwtProvider;
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.response.LoginResponseDTO;
 import br.com.fiap.hackathon_auth.application.usecases.AuthUseCases;
 import br.com.fiap.hackathon_auth.domain.user.InvalidCredentialsException;
@@ -17,10 +18,10 @@ public class AuthServiceImpl implements AuthUseCases {
 
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final JwtProvider jwtProvider;
 
 	@Override
 	public LoginResponseDTO login(String username, String password) {
-		// Busca o usuário no banco de dados
 		User user = userRepository.findByEmail(username)
 				.orElseThrow(() -> new UserNotFoundException("Usuário não encontrado."));
 
@@ -28,6 +29,8 @@ public class AuthServiceImpl implements AuthUseCases {
 			throw new InvalidCredentialsException("Usuário ou senha inválidos.");
 		}
 
-		return new LoginResponseDTO("token-temporario");
+		String accessToken = jwtProvider.generateAccessToken(user);
+
+		return new LoginResponseDTO(accessToken);
 	}
 }

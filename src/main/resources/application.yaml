@@ -19,6 +19,12 @@ spring:
     show-sql: true
 
 jwt:
-  secret: postechHackathon2026
+  secret: postechHackathon2026SecretKey12345
   refresh-token-expiration: 900000
   access-token-expiration: 604800000
+
+cors:
+  allowed-origins: http://localhost:3000,http://localhost:4200
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
+  allowed-headers: "*"
+  allow-credentials: true

@@ -31,9 +31,11 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(csrf -> csrf.disable())
 				.cors(cors -> cors.configurationSource(corsConfigurationSource))
-				.authorizeHttpRequests(auth -> auth.requestMatchers("SecurityConstants.AUTHORIZED_URLS").permitAll()
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/api/v1/auth/login", "/h2-console/**", "/swagger-ui/**", "/v3/api-docs/**")
+						.permitAll()
 						.requestMatchers("/actuator/**").permitAll()
-						.requestMatchers("/admin/roles/**").hasRole("ADMIN").anyRequest().authenticated())
+						.anyRequest().authenticated())
 				.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
