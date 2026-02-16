@@ -12,7 +12,9 @@ import org.springframework.web.context.request.WebRequest;
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.response.ErrorResponseDTO;
 import br.com.fiap.hackathon_auth.domain.exceptions.InvalidBasicAuthFormatException;
 import br.com.fiap.hackathon_auth.domain.exceptions.InvalidBasicAuthHeaderException;
+import br.com.fiap.hackathon_auth.domain.user.EmailAlreadyExistsException;
 import br.com.fiap.hackathon_auth.domain.user.InvalidCredentialsException;
+import br.com.fiap.hackathon_auth.domain.user.InvalidUserDataException;
 import br.com.fiap.hackathon_auth.domain.user.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,6 +52,38 @@ public class GlobalExceptionHandler {
 				.build();
 
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+	}
+
+	@ExceptionHandler(EmailAlreadyExistsException.class)
+	public ResponseEntity<ErrorResponseDTO> handleEmailAlreadyExistsException(
+			EmailAlreadyExistsException ex, WebRequest request) {
+		log.error("Email já existe: {}", ex.getMessage());
+
+		ErrorResponseDTO error = ErrorResponseDTO.builder()
+				.timestamp(LocalDateTime.now())
+				.status(HttpStatus.CONFLICT.value())
+				.error(HttpStatus.CONFLICT.getReasonPhrase())
+				.message(ex.getMessage())
+				.path(request.getDescription(false).replace("uri=", ""))
+				.build();
+
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+	}
+
+	@ExceptionHandler(InvalidUserDataException.class)
+	public ResponseEntity<ErrorResponseDTO> handleInvalidUserDataException(
+			InvalidUserDataException ex, WebRequest request) {
+		log.error("Dados de usuário inválidos: {}", ex.getMessage());
+
+		ErrorResponseDTO error = ErrorResponseDTO.builder()
+				.timestamp(LocalDateTime.now())
+				.status(HttpStatus.BAD_REQUEST.value())
+				.error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+				.message(ex.getMessage())
+				.path(request.getDescription(false).replace("uri=", ""))
+				.build();
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
