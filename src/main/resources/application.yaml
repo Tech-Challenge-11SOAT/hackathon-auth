@@ -4,19 +4,18 @@ spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
   datasource:
-    url: jdbc:h2:mem:hackathondb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: 
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    url: ${DB_URL:jdbc:mysql://localhost:3306/hackathondb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
+  web:
+    resources:
+      add-mappings: true
 
 jwt:
   secret: postechHackathon2026SecretKey12345

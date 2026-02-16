@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "videos")
+@Table(name = "user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
