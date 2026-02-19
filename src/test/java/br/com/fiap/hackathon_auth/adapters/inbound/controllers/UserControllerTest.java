@@ -1,22 +1,5 @@
 package br.com.fiap.hackathon_auth.adapters.inbound.controllers;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.request.RegisterRequestDTO;
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.response.RegisterResponseDTO;
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.response.UserResponseDTO;
@@ -24,6 +7,20 @@ import br.com.fiap.hackathon_auth.application.usecases.UserUseCases;
 import br.com.fiap.hackathon_auth.domain.user.InvalidUserDataException;
 import br.com.fiap.hackathon_auth.domain.user.User;
 import br.com.fiap.hackathon_auth.domain.user.UserNotFoundException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserControllerTest {

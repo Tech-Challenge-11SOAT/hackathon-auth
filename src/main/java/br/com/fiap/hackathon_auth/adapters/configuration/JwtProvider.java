@@ -1,14 +1,5 @@
 package br.com.fiap.hackathon_auth.adapters.configuration;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-
-import javax.crypto.SecretKey;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
-
 import br.com.fiap.hackathon_auth.domain.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -17,13 +8,20 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.MacAlgorithm;
 import jakarta.annotation.PostConstruct;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 @Component
 public class JwtProvider {
 
 	private static final MacAlgorithm SIGNATURE_ALGORITHM = Jwts.SIG.HS256;
-	private SecretKey key;
 	private final JwtProperties jwtProperties;
+	private SecretKey key;
 
 	public JwtProvider(JwtProperties jwtProperties) {
 		this.jwtProperties = jwtProperties;

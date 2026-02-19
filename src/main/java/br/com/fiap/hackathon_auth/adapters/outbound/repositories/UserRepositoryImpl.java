@@ -1,16 +1,15 @@
 package br.com.fiap.hackathon_auth.adapters.outbound.repositories;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.stereotype.Repository;
-
 import br.com.fiap.hackathon_auth.adapters.outbound.entities.JpaUserEntity;
 import br.com.fiap.hackathon_auth.domain.user.User;
 import br.com.fiap.hackathon_auth.domain.user.UserRepository;
 import br.com.fiap.hackathon_auth.utils.mappers.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor

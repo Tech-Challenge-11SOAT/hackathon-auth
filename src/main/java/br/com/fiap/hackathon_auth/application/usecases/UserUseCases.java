@@ -1,10 +1,10 @@
 package br.com.fiap.hackathon_auth.application.usecases;
 
-import java.util.UUID;
-
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.request.RegisterRequestDTO;
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.response.RegisterResponseDTO;
 import br.com.fiap.hackathon_auth.domain.user.User;
+
+import java.util.UUID;
 
 public interface UserUseCases {
 

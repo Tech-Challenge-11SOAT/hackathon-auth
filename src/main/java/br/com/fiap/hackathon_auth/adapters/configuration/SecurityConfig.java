@@ -17,14 +17,14 @@ public class SecurityConfig {
 	private final JwtProvider jwtProvider;
 	private final CorsConfigurationSource corsConfigurationSource;
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
 	public SecurityConfig(JwtProvider jwtProvider, CorsConfigurationSource corsConfigurationSource) {
 		this.jwtProvider = jwtProvider;
 		this.corsConfigurationSource = corsConfigurationSource;
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 	@Bean

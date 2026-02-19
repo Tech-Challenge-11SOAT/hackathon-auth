@@ -1,11 +1,5 @@
 package br.com.fiap.hackathon_auth.application.service;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.request.RegisterRequestDTO;
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.response.RegisterResponseDTO;
 import br.com.fiap.hackathon_auth.application.usecases.UserUseCases;
@@ -15,6 +9,11 @@ import br.com.fiap.hackathon_auth.domain.user.User;
 import br.com.fiap.hackathon_auth.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Slf4j
 @Service

@@ -1,22 +1,18 @@
 package br.com.fiap.hackathon_auth.adapters.inbound.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.request.LoginRequestDTO;
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.response.LoginResponseDTO;
 import br.com.fiap.hackathon_auth.adapters.inbound.extractors.BasicAuthExtractor;
 import br.com.fiap.hackathon_auth.application.usecases.AuthUseCases;
 import br.com.fiap.hackathon_auth.domain.exceptions.InvalidBasicAuthHeaderException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AuthControllerTest {

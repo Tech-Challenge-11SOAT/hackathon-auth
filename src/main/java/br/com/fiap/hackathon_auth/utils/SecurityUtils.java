@@ -1,10 +1,9 @@
 package br.com.fiap.hackathon_auth.utils;
 
-import java.util.stream.Stream;
-
+import br.com.fiap.hackathon_auth.utils.constants.SecurityConstants;
 import org.springframework.util.AntPathMatcher;
 
-import br.com.fiap.hackathon_auth.utils.constants.SecurityConstants;
+import java.util.stream.Stream;
 
 public class SecurityUtils {
 

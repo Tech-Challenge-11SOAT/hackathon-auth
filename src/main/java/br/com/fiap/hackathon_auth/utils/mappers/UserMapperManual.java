@@ -1,10 +1,9 @@
 package br.com.fiap.hackathon_auth.utils.mappers;
 
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
-
 import br.com.fiap.hackathon_auth.adapters.outbound.entities.JpaUserEntity;
 import br.com.fiap.hackathon_auth.domain.user.User;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
 @Primary
 @Component
