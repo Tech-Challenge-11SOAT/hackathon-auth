@@ -27,12 +27,29 @@ spring:
     clean-disabled: true
 
 jwt:
-  secret: postechHackathon2026SecretKey12345
-  refresh-token-expiration: 900000
-  access-token-expiration: 604800000
+  secret: ${JWT_SECRET:postechHackathon2026SecretKey12345}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:900000}
+  access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION:604800000}
 
 cors:
-  allowed-origins: http://localhost:3000,http://localhost:4200
-  allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
-  allowed-headers: "*"
-  allow-credentials: true
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:4200}
+  allowed-methods: ${CORS_ALLOWED_METHODS:GET,POST,PUT,DELETE,OPTIONS,PATCH}
+  allowed-headers: ${CORS_ALLOWED_HEADERS:*}
+  allow-credentials: ${CORS_ALLOW_CREDENTIALS:true}
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
