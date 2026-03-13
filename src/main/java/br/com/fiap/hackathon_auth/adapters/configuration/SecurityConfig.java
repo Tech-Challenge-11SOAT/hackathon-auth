@@ -14,11 +14,15 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	private final JwtProvider jwtProvider;
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;
+	private final RateLimitingFilter rateLimitingFilter;
 	private final CorsConfigurationSource corsConfigurationSource;
 
-	public SecurityConfig(JwtProvider jwtProvider, CorsConfigurationSource corsConfigurationSource) {
-		this.jwtProvider = jwtProvider;
+	public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
+			RateLimitingFilter rateLimitingFilter,
+			CorsConfigurationSource corsConfigurationSource) {
+		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+		this.rateLimitingFilter = rateLimitingFilter;
 		this.corsConfigurationSource = corsConfigurationSource;
 	}
 
@@ -37,7 +41,8 @@ public class SecurityConfig {
 						.permitAll()
 						.requestMatchers("/actuator/**").permitAll()
 						.anyRequest().authenticated())
-				.addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(rateLimitingFilter, UsernamePasswordAuthenticationFilter.class)
+				.addFilterAfter(jwtAuthenticationFilter, RateLimitingFilter.class)
 				.build();
 	}
 }

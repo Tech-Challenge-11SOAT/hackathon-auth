@@ -1,6 +1,7 @@
 package br.com.fiap.hackathon_auth.application.service;
 
 import br.com.fiap.hackathon_auth.adapters.configuration.JwtProvider;
+import br.com.fiap.hackathon_auth.adapters.outbound.cache.RedisSessionService;
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.response.LoginResponseDTO;
 import br.com.fiap.hackathon_auth.application.usecases.AuthUseCases;
 import br.com.fiap.hackathon_auth.domain.user.InvalidCredentialsException;
@@ -18,6 +19,7 @@ public class AuthServiceImpl implements AuthUseCases {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtProvider jwtProvider;
+	private final RedisSessionService redisSessionService;
 
 	@Override
 	public LoginResponseDTO login(String username, String password) {
@@ -29,6 +31,7 @@ public class AuthServiceImpl implements AuthUseCases {
 		}
 
 		String accessToken = jwtProvider.generateAccessToken(user);
+		redisSessionService.saveSession(user.getId(), accessToken, jwtProvider.getTokenTtl(accessToken));
 
 		return new LoginResponseDTO(accessToken);
 	}

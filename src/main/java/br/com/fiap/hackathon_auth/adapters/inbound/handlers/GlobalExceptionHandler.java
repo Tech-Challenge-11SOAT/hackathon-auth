@@ -3,6 +3,7 @@ package br.com.fiap.hackathon_auth.adapters.inbound.handlers;
 import br.com.fiap.hackathon_auth.adapters.inbound.dto.response.ErrorResponseDTO;
 import br.com.fiap.hackathon_auth.domain.exceptions.InvalidBasicAuthFormatException;
 import br.com.fiap.hackathon_auth.domain.exceptions.InvalidBasicAuthHeaderException;
+import br.com.fiap.hackathon_auth.domain.exceptions.RedisUnavailableException;
 import br.com.fiap.hackathon_auth.domain.user.EmailAlreadyExistsException;
 import br.com.fiap.hackathon_auth.domain.user.InvalidCredentialsException;
 import br.com.fiap.hackathon_auth.domain.user.InvalidUserDataException;
@@ -152,6 +153,22 @@ public class GlobalExceptionHandler {
 				.build();
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+
+	@ExceptionHandler(RedisUnavailableException.class)
+	public ResponseEntity<ErrorResponseDTO> handleRedisUnavailableException(
+			RedisUnavailableException ex, WebRequest request) {
+		log.warn("Redis indisponível: {}", ex.getMessage());
+
+		ErrorResponseDTO error = ErrorResponseDTO.builder()
+				.timestamp(LocalDateTime.now())
+				.status(HttpStatus.SERVICE_UNAVAILABLE.value())
+				.error(HttpStatus.SERVICE_UNAVAILABLE.getReasonPhrase())
+				.message("Serviço temporariamente indisponível. Tente novamente em instantes.")
+				.path(request.getDescription(false).replace("uri=", ""))
+				.build();
+
+		return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
 	}
 
 	@ExceptionHandler(Exception.class)
